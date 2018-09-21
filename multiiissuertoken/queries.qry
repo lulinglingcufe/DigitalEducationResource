@@ -1,0 +1,93 @@
+/**
+ * New query file
+ */
+query GetUserTokenRechargeN{
+    description: "admin get N userrecharge"
+    statement:
+        SELECT token.UserTokenRecharge
+            WHERE (confirmBank == 'N')
+                ORDER BY [tokenRechargeID ASC]
+}
+
+query GetUserTokenRechargeY{
+    description: "admin get Y userrecharge"
+    statement:
+        SELECT token.UserTokenRecharge
+            WHERE (confirmBank == 'Y')
+                ORDER BY [tokenRechargeID ASC]
+}
+
+query GetUserTokenRechargeR{
+    description: "admin get R userrecharge"
+    statement:
+        SELECT token.UserTokenRecharge
+            WHERE (confirmBank == 'R')
+                ORDER BY [tokenRechargeID ASC]
+}
+
+query GetUserTokenRechargeUser {
+    description: "Select all UserTokenRecharge of a spcific user"
+    statement:
+        SELECT token.UserTokenRecharge
+            WHERE (_$user == user)
+                ORDER BY [tokenRechargeID ASC]
+}
+
+query GetUserTokenRechargeUserN{
+    description: "user get N userrecharge"
+    statement:
+        SELECT token.UserTokenRecharge
+            WHERE (confirmBank == 'N' AND _$user == user)
+                ORDER BY [tokenRechargeID ASC]
+}
+
+query GetUserTokenRechargeUserY{
+    description: "user get Y userrecharge"
+    statement:
+        SELECT token.UserTokenRecharge
+            WHERE (confirmBank == 'Y' AND _$user == user)
+                ORDER BY [tokenRechargeID ASC]
+}
+
+query GetUserTokenRechargeUserR{
+    description: "user get R userrecharge"
+    statement:
+        SELECT token.UserTokenRecharge
+            WHERE (confirmBank == 'R' AND _$user == user)
+                ORDER BY [tokenRechargeID ASC]
+}
+
+query GetUser {
+    description: "Select user of specific name"
+    statement:
+        SELECT token.User
+            WHERE (_$email == email)
+}
+
+query GetService {
+    description: "Select a specific service"
+    statement:
+        SELECT token.Service
+            WHERE (_$serviceID == serviceID)
+}
+
+
+query GetUserConsumeServiceU {
+    description: "Select all BuyService of a spcific user"
+    statement:
+        SELECT token.UserConsumeService
+            WHERE (_$user == user)
+                ORDER BY [timestamp ASC]
+}
+
+query GetUserConsumeServiceUname {
+    description: "Select all BuyService of a spcific user"
+    statement:
+        SELECT token.UserConsumeService
+            WHERE (_$user == user)
+                ORDER BY [timestamp ASC]
+}
+
+//ASC 从小到大
+
+

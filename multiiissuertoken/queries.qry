@@ -1,5 +1,5 @@
 /**
- * New query file
+ * admin审核用户充值
  */
 query GetUserTokenRechargeN{
     description: "admin get N userrecharge"
@@ -17,6 +17,7 @@ query GetUserTokenRechargeY{
                 ORDER BY [tokenRechargeID ASC]
 }
 
+
 query GetUserTokenRechargeR{
     description: "admin get R userrecharge"
     statement:
@@ -25,6 +26,9 @@ query GetUserTokenRechargeR{
                 ORDER BY [tokenRechargeID ASC]
 }
 
+/**
+ * 用户查看充值信息
+ */
 query GetUserTokenRechargeUser {
     description: "Select all UserTokenRecharge of a spcific user"
     statement:
@@ -57,7 +61,9 @@ query GetUserTokenRechargeUserR{
                 ORDER BY [tokenRechargeID ASC]
 }
 
-
+/**
+ * 用户查看购买服务信息   ASC 从小到大 升序
+ */
 
 query GetUserConsumeServiceU {
     description: "Select all BuyService of a spcific user"
@@ -67,14 +73,16 @@ query GetUserConsumeServiceU {
                 ORDER BY [timestamp ASC]
 }
 
-query GetUserConsumeServiceUname {
+/**
+ * 用户查看转账记录 
+ */
+
+query GetUserTokenTransferU_U {
     description: "Select all BuyService of a spcific user"
     statement:
-        SELECT token.UserConsumeService
-            WHERE (_$user == user)
+        SELECT token.TokenTransferU_U
+            WHERE (_$fromuser == fromuser)
                 ORDER BY [timestamp ASC]
 }
-
-//ASC 从小到大
 
 

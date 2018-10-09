@@ -37,8 +37,6 @@ function  inituser(initUser) {
 }
 
 
-
-
 /**
  * A toekn has been transfered
  * @param {token.InitCentralBank} initCentralBank - the TokenTransfer transaction
@@ -136,126 +134,37 @@ function  initservice(initService) {
 
 
 
-
-
-
 /**
  * A toekn has been transfered
- * @param {token.IssueToken2} issueToken2 - the TokenTransfer transaction
- * @transaction
- */
-function  issuetoken(issueToken2) {
-    var issueBank = issueToken2.issuer;
-    var NS = 'token';
-
-    issueBank.totalIssueToken += issueToken2.tokenNum;
-    issueBank.accountBalance += issueToken2.tokenNum;
-
-    return getParticipantRegistry(NS + '.CentralBank')
-        .then(function (CentralBankRegistry) {
-            // update the grower's balance
-            return CentralBankRegistry.update(issueBank);
-        });
-}
-
-/**
- * A toekn has been transfered
- * @param {token.TokenTransferC_C} tokenTransferC_C - the TokenTransfer transaction
+ * @param {token.TokenTransferU_U} tokenTransferU_U - the TokenTransfer transaction
  * @transaction
  */
  
-function transfertokenC_C(tokenTransferC_C) {
-    var fromCompany = tokenTransferC_C.from;
-    var toCompany = tokenTransferC_C.to;
-    var transferTokennum = tokenTransferC_C.transferNum;
+function transfertokenU_U(tokenTransferU_U) {
+    var fromUser = tokenTransferU_U.fromuser;
+    var toUser = tokenTransferU_U.to;
+    var transferTokennum = tokenTransferU_U.transferNum;
     var NS = 'token';
 
-    if (transferTokennum >= fromCompany.accountBalance) {
+    if (transferTokennum >= fromUser.accountBalance) {
         throw new Error('Transfer account should have enough balance.');
     }
+    
+    userArray = new Array();
 
-    fromCompany.accountBalance -= transferTokennum;
-    toCompany.accountBalance += transferTokennum;
+    fromUser.accountBalance -= transferTokennum;
+    toUser.accountBalance += transferTokennum;
 
-    return getParticipantRegistry(NS + '.Company')
-        .then(function (CompanyRegistry) {
-            // update the grower's balance
-            return CompanyRegistry.update(fromCompany);
-        })
-        .then(function () {
-            return getParticipantRegistry(NS + '.Company');
-        })
-        .then(function (CompanytoRegistry) {
-            // update the importer's balance
-            return CompanytoRegistry.update(toCompany);
+    userArray.push(fromUser);
+    userArray.push(toUser);
+
+    return getParticipantRegistry(NS + '.User')
+        .then(function (UserRegistry) {
+            return UserRegistry.updateAll(userArray);
         });
 }
  
 
-
-
-
-
-/**
- * A toekn has been transfered
- * @param {token.ConfirmSign1B} confirmSign1B - the TokenTransfer transaction
- * @transaction
- */
-function  confirmsign1B(confirmSign1B) {
-    var NS = 'token';
-    var factory = getFactory();
-    var issuetokensign = factory.newResource(NS, 'IssueTokenSign', confirmSign1B.issueTokenSignId);
-    issuetokensign.transferNum = confirmSign1B.transferNum;
-    issuetokensign.confirmSignR2 = 'N';
-    issuetokensign.confirmer1 = confirmSign1B.confirmer1;
-
-    return getAssetRegistry(NS + '.IssueTokenSign')
-        .then(function (IssueTokenSignRegistry) {
-            // update the grower's balance
-            return IssueTokenSignRegistry.addAll([issuetokensign]);
-        });
-}
-
-
-/**
- * A toekn has been transfered
- * @param {token.ConfirmSign2R} confirmSign2R - the TokenTransfer transaction
- * @transaction
- */
-function  confirmsign2R(confirmSign2R) {
-    var NS = 'token';
-    var issuetokensign = confirmSign2R.issuetokensign;
-
-    if (issuetokensign.transferNum != confirmSign2R.transferNum) {
-        throw new Error('Issue token amount is not same, Please check.');
-    }
-
-    if (issuetokensign.confirmSignR2 != 'N') {
-        throw new Error('Issue  is aready confirmed by Regulator1.');
-    }
-
-    if (issuetokensign.confirmer1 != confirmSign2R.confirmer1) {
-        throw new Error('Issue  is not confirmed by This Bank.');
-    }
-
-    issuetokensign.confirmSignR2 = 'Y';
-    issuetokensign.confirmer1.totalIssueToken += issuetokensign.transferNum;
-    issuetokensign.confirmer1.accountBalance += issuetokensign.transferNum;
-
-    return getParticipantRegistry(NS + '.CentralBank')
-    .then(function (CentralBankRegistry) {
-        // update the grower's balance
-        return CentralBankRegistry.update(issuetokensign.confirmer1);
-    })
-    .then(function() {
-        return getAssetRegistry(NS + '.IssueTokenSign');
-    })
-    .then(function(IssueTokenSignRegistry) {
-        // add the shipments
-        return IssueTokenSignRegistry.update(issuetokensign);
-    });
-
-}
 
 /**
  * A toekn has been transfered
@@ -325,18 +234,6 @@ async function  rejectUserRecharge(rejectRequest) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * 
  * @param {token.UserConsumeService} userConsumeService - the userConsumeService transaction
@@ -392,3 +289,83 @@ async function userconsumeservice(userConsumeService) {
 
 
  
+/**
+ * 一些还没有用到的函数
+ * @param {token.ConfirmSign1B} confirmSign1B - the TokenTransfer transaction
+ * @transaction
+ */
+function  confirmsign1B(confirmSign1B) {
+    var NS = 'token';
+    var factory = getFactory();
+    var issuetokensign = factory.newResource(NS, 'IssueTokenSign', confirmSign1B.issueTokenSignId);
+    issuetokensign.transferNum = confirmSign1B.transferNum;
+    issuetokensign.confirmSignR2 = 'N';
+    issuetokensign.confirmer1 = confirmSign1B.confirmer1;
+
+    return getAssetRegistry(NS + '.IssueTokenSign')
+        .then(function (IssueTokenSignRegistry) {
+            // update the grower's balance
+            return IssueTokenSignRegistry.addAll([issuetokensign]);
+        });
+}
+
+
+/**
+ * A toekn has been transfered
+ * @param {token.ConfirmSign2R} confirmSign2R - the TokenTransfer transaction
+ * @transaction
+ */
+function  confirmsign2R(confirmSign2R) {
+    var NS = 'token';
+    var issuetokensign = confirmSign2R.issuetokensign;
+
+    if (issuetokensign.transferNum != confirmSign2R.transferNum) {
+        throw new Error('Issue token amount is not same, Please check.');
+    }
+
+    if (issuetokensign.confirmSignR2 != 'N') {
+        throw new Error('Issue  is aready confirmed by Regulator1.');
+    }
+
+    if (issuetokensign.confirmer1 != confirmSign2R.confirmer1) {
+        throw new Error('Issue  is not confirmed by This Bank.');
+    }
+
+    issuetokensign.confirmSignR2 = 'Y';
+    issuetokensign.confirmer1.totalIssueToken += issuetokensign.transferNum;
+    issuetokensign.confirmer1.accountBalance += issuetokensign.transferNum;
+
+    return getParticipantRegistry(NS + '.CentralBank')
+    .then(function (CentralBankRegistry) {
+        // update the grower's balance
+        return CentralBankRegistry.update(issuetokensign.confirmer1);
+    })
+    .then(function() {
+        return getAssetRegistry(NS + '.IssueTokenSign');
+    })
+    .then(function(IssueTokenSignRegistry) {
+        // add the shipments
+        return IssueTokenSignRegistry.update(issuetokensign);
+    });
+
+}
+
+
+/**
+ * A toekn has been transfered
+ * @param {token.IssueToken2} issueToken2 - the TokenTransfer transaction
+ * @transaction
+ */
+function  issuetoken(issueToken2) {
+    var issueBank = issueToken2.issuer;
+    var NS = 'token';
+
+    issueBank.totalIssueToken += issueToken2.tokenNum;
+    issueBank.accountBalance += issueToken2.tokenNum;
+
+    return getParticipantRegistry(NS + '.CentralBank')
+        .then(function (CentralBankRegistry) {
+            // update the grower's balance
+            return CentralBankRegistry.update(issueBank);
+        });
+}

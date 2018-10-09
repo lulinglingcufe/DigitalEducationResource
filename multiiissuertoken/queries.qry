@@ -57,19 +57,6 @@ query GetUserTokenRechargeUserR{
                 ORDER BY [tokenRechargeID ASC]
 }
 
-query GetUser {
-    description: "Select user of specific name"
-    statement:
-        SELECT token.User
-            WHERE (_$email == email)
-}
-
-query GetService {
-    description: "Select a specific service"
-    statement:
-        SELECT token.Service
-            WHERE (_$serviceID == serviceID)
-}
 
 
 query GetUserConsumeServiceU {

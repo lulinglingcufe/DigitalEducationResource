@@ -1,7 +1,9 @@
 ## 1.查看管理员中央账户
 
 用户标识符 email : centralbank@email.com
+
 用户余额 accountBalance : 0
+
 总共发行课程币数量 totalIssueToken: 0
 
 ```

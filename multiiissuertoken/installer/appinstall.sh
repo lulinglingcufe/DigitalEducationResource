@@ -180,21 +180,21 @@ docker run \
   --rm \
   --network composer_default \
   -v $(pwd)/.loc-card-store:/home/composer/.composer \
-  hyperledger/composer-cli:latest \  
+  hyperledger/composer-cli:latest \
   transaction submit -c admin@token-network -d '{"$class": "token.InitCompany"}'
 
 docker run \
   --rm \
   --network composer_default \
   -v $(pwd)/.loc-card-store:/home/composer/.composer \
-  hyperledger/composer-cli:latest \ 
+  hyperledger/composer-cli:latest \
   transaction submit -c admin@token-network -d '{"$class": "token.InitContract"}'
 
 docker run \
   --rm \
   --network composer_default \
   -v $(pwd)/.loc-card-store:/home/composer/.composer \
-  hyperledger/composer-cli:latest \   
+  hyperledger/composer-cli:latest \
   transaction submit -c admin@token-network -d '{"$class": "token.InitService"}'
 
 docker run \

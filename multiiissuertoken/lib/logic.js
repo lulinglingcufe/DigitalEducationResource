@@ -26,13 +26,19 @@ function  inituser(initUser) {
     var factory = getFactory();
     var NS = 'token';
     // create the grower
-    var user = factory.newResource(NS, 'User', 'user1@email.com');
-    user.accountBalance = 0;
+    var user1 = factory.newResource(NS, 'User', 'user1@email.com');
+    user1.accountBalance = 10;
+    var user2 = factory.newResource(NS, 'User', 'test1@qq.com');
+    user2.accountBalance = 110;
+    var user3 = factory.newResource(NS, 'User', 'test@qq.com');
+    user3.accountBalance = 220;
+    var user4 = factory.newResource(NS, 'User', 'test2@qq.com');
+    user4.accountBalance = 330;
 
     return getParticipantRegistry(NS + '.User')
         .then(function (UserRegistry) {
             // add the growers
-            return UserRegistry.addAll([user]);
+            return UserRegistry.addAll([user1,user2,user3,user4]);
         });
 }
 

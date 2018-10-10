@@ -55,7 +55,7 @@ transaction InitUser {
 }
 
 
-
+//没有用到的definition
 asset IssueTokenSign identified by issueTokenSignId {
   o String issueTokenSignId  //发币请求ID
   o IfSign confirmSignR2

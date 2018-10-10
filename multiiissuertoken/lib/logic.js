@@ -15,8 +15,6 @@
  * 
  */
 
-
-
 /**
  * A toekn has been transfered
  * @param {token.InitUser} initUser - the TokenTransfer transaction

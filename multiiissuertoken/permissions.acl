@@ -16,32 +16,3 @@ rule NetworkAdminUser {
     resource: "**"
     action: ALLOW
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Make sure all resources are locked down by default.
- * If permissions need to be granted to certain resources, that should happen
- * above this rule. Anything not explicitly specified gets locked down.
- */
-rule Default {
-    description: "Deny all participants access to all resources"
-    participant: "ANY"
-    operation: ALL
-    resource: "token.*"
-    action: DENY
-}

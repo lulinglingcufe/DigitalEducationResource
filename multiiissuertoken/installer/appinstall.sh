@@ -147,7 +147,7 @@ docker run \
   hyperledger/composer-cli:latest \
   network install -c PeerAdmin@hlfv1 -a token-network.bna
 
-NETWORK_VERSION="0.0.2-deploy.36"
+NETWORK_VERSION="0.0.2-deploy.1"
 
 
 # START THE BNA

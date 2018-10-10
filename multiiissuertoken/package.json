@@ -74,8 +74,5 @@
         "file": "../../markdown-license.txt"
       }
     }
-  },
-  "dependencies": {
-    "token-model": "^0.2.0"
   }
 }

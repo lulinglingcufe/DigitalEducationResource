@@ -201,7 +201,7 @@ docker run \
   --rm \
   --network composer_default \
   -v $(pwd)/.loc-card-store:/home/composer/.composer \
-  hyperledger/composer-cli:latest \      
+  hyperledger/composer-cli:latest \
   transaction submit -c admin@token-network -d '{"$class": "token.InitUser"}'
 
 

@@ -7,6 +7,17 @@
   "description": "token",
   "networkImage": "https://hyperledger.github.io/composer-sample-networks/packages/animaltracking-network/networkimage.svg",
   "networkImageanimated": "https://hyperledger.github.io/composer-sample-networks/packages/animaltracking-network/networkimageanimated.svg",
+  "scripts": {
+    "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/token-network.bna",
+    "pretest": "npm run lint",
+    "lint": "eslint .",
+    "postlint": "npm run licchk",
+    "licchk": "license-check-and-add",
+    "postlicchk": "npm run doc",
+    "doc": "jsdoc --pedantic --recurse -c jsdoc.json",
+    "test": "mocha -t 0 --recursive",
+    "deploy": "./scripts/deploy.sh"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/hyperledger/composer"

@@ -221,7 +221,7 @@ docker run \
   -v $(pwd)/.loc-card-store:/home/composer/.composer \
   -e COMPOSER_CARD=admin@token-network \
   -e COMPOSER_NAMESPACES=never \
-  -p 3040:3040 \
+  -p 3040:3000 \
   hyperledger/composer-rest-server:latest
 
 #WAIT FOR REST SERVER TO WAKE UP

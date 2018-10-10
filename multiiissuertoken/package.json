@@ -28,7 +28,7 @@
     "defra",
     "farmer",
     "compliance",
-    "animal",
+    "token",
     "movement",
     "composer",
     "composer-network"
@@ -76,6 +76,6 @@
     }
   },
   "dependencies": {
-    "animaltracking-model": "^0.2.0"
+    "token-model": "^0.2.0"
   }
 }

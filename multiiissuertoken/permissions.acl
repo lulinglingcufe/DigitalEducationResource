@@ -17,19 +17,6 @@ rule NetworkAdminUser {
     action: ALLOW
 }
 
-/**
- * Access Control List for the bond data
- */
-rule CentralBank {
-    description: "Allow full access to the issuer of a bond"
-    participant(i): "token.CentralBank"
-    operation: ALL
-    resource(a): "org.acme.bond.BondAsset"
-    condition: (a.bond.issuer.memberId === i.memberId)
-    action: ALLOW
-}
-
-
 
 
 

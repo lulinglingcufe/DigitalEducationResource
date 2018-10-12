@@ -92,7 +92,7 @@ POST Jason Parameters：
   "$class": "token.UserRecharge",
   "tokenNum": 150,  
   "rechargeID": "recharge4",   
-  "user": "resource:token.User#user1@email.com"  
+  "user": "resource:token.User#user1@email.com"  ### 注意加上class!
 }
 
 Curl:
@@ -183,29 +183,39 @@ GET Responses：
 
 需要提交的参数：
 
-用户ID from:  user1@email.com
+用户ID from:   resource:token.User#test2@qq.com
 
-转账ID to :  user2@email.com
-转账金额 transferNum:  10
-转账记录的ID transferID:  trans1
+(需要加上class参数)
+
+转账ID to :   resource:token.User#test@qq.com
+
+
+
+转账金额 transferNum:  11.4
+
+
+
+转账记录的ID transferID:  tf12
 
 ```
 POST Jason Parameters：
 {
-  "$class": "token.UserRecharge",   #################
-  "tokenNum": 150,  
-  "rechargeID": "recharge4",   
-  "user": "resource:token.User#user1@email.com"  
+  "$class": "token.TokenTransferU_U",
+  "transferNum": 11.4,
+  "transferID": "tf12",
+  "fromuser": "resource:token.User#test2@qq.com",
+  "to": "resource:token.User#test@qq.com"
 }
 
 Curl:
 
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
-   "$class": "token.UserRecharge", \ 
-   "tokenNum": 150,   \ 
-   "rechargeID": "recharge4",    \ 
-   "user": "resource:token.User#user1%40email.com"   \ 
- }' 'http://IP:3040/api/UserRecharge'
+   "$class": "token.TokenTransferU_U", \ 
+   "transferNum": 11.4, \ 
+   "transferID": "tf12", \ 
+   "fromuser": "resource:token.User#test2%40qq.com", \ 
+   "to": "resource:token.User#test%40qq.com" \ 
+ }' 'http://IP:3040/api/TokenTransferU_U'
 ```
 
 
@@ -218,26 +228,29 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 
 1.1 列表：按照"转账时间 "的升序 ，显示"转账ID" 、"转账金额"、"转账地址"。
 
-使用query，请求url 为GetUserTokenTransferU_U    ///TODO
+使用query，请求url 为GetUserTokenTransferU_U   
 
 ```
 Parameters：
 
-fromuser 的值是 resource:token.User#user1@email.com  //注意这里的参数需要加上class!!
+fromuser 的值是 resource:token.User#test2@qq.com  //注意这里的参数需要加上class!!
 
 Curl:
 
-curl -X GET --header 'Accept: application/json' 'http://IP:3040/api/queries/GetUserTokenRechargeUserY?user=resource%3Atoken.User%23user1%40email.com'
+http://IP:3040/api/queries/GetUserTokenTransferU_U?fromuser=resource%3Atoken.User%23test2%40qq.com
 
-GET Response（按照"充值ID "从字符顺序小到大升序排列）：
+GET Response（按照"时间戳 timestamp"从字符顺序小到大升序排列）：
 
-[                 ///TODO
-{
-    "$class": "token.UserTokenRecharge",
-    "tokenRechargeID": "recharge1",
-    "confirmBank": "Y",
-    "tokenNum": 222,
-    "user": "resource:token.User#user1@email.com"
+[
+  {
+    "$class": "token.TokenTransferU_U",
+    "logs": [],
+    "transferNum": 11.4,
+    "transferID": "tf12",
+    "fromuser": "resource:token.User#test2@qq.com",
+    "to": "resource:token.User#test@qq.com",
+    "transactionId": "3079aa6f0fa9cecb9d131d9db6dc5a422fe266bc85a5729e506279f21de22ead",
+    "timestamp": "2018-10-12T03:48:27.957Z"
   }
 ]
 ```
